@@ -13,9 +13,10 @@ app.listen(port, () => {
   console.log(`Server started on ${port}`);
 });
 
+const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/ezwashdb';
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost/ezwashdb', () => {
-  console.log('Connected to mongodb');
+mongoose.connect(mongoUrl, () => {
+  console.log(`Connected to mongodb @ ${mongoUrl}`);
 });
 
 /**
