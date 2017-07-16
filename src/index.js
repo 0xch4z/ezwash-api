@@ -6,6 +6,10 @@ import { json as jsonParser } from 'body-parser';
 
 import clientRouter from './routers/client-router';
 import transactionRouter from './routers/transaction-router';
+import userRouter from './routers/user-router';
+import authenticationRouter from './routers/authentication-router';
+
+import errorHandler from './middleware/error-handler';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,28 +23,17 @@ mongoose.connect(mongoUrl, () => {
   console.log(`Connected to mongodb @ ${mongoUrl}`);
 });
 
-/**
- * Middleware
- */
+// Priority middleware
 app.use(compression());
 app.use(jsonParser());
 app.use(logger('dev'));
 
+// Routers
 app.use('/clients', clientRouter);
 app.use('/transactions', transactionRouter);
+app.use('/users', userRouter);
+app.use('/auth', authenticationRouter);
 
-app.use((req, res, next) => {
-  res.status(404).json({
-    error: true,
-    message: 'Not found',
-  });
-});
-
-// Handle Internal Error
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    error: true,
-    message: err.message
-  });
-  console.error(err);
-});
+// Error Handlers
+app.use(errorHandler.notFound);
+app.use(errorHandler.returnError);
