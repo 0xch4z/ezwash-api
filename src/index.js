@@ -1,7 +1,7 @@
 import express from 'express'
 import compression from 'compression';
 import mongoose from 'mongoose';
-import { default as logger } from 'morgan';
+import logger from 'morgan';
 import { json as jsonParser } from 'body-parser';
 
 import clientRouter from './routers/client-router';
