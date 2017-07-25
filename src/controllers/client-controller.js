@@ -4,7 +4,7 @@ import models from '../models';
  * Get Clients
  * GET '/'
  */
-export const getClients = async (req, res, next) => {
+export const getClients = async (req, res) => {
   // Get clients
   const clients = await models.Client.find({});
   res.status(200).json(clients);
@@ -14,7 +14,7 @@ export const getClients = async (req, res, next) => {
  * Create Client
  * POST '/'
  */
-export const createClient = async (req, res, next) => {
+export const createClient = async (req, res) => {
   // Get parameters
   const { name, monthly, email, timestamp } = req.body;
   // Create new client
@@ -37,7 +37,7 @@ export const createClient = async (req, res, next) => {
  * Get Client
  * GET '/'
  */
-export const getClient = async (req, res, next) => {
+export const getClient = async (req, res) => {
   // Get parameters
   const { cid } = req.params;
   // Get client and populate client transactions
@@ -49,7 +49,7 @@ export const getClient = async (req, res, next) => {
  * Update Client
  * PATCH '/'
  */
-export const updateClient = async (req, res, next) => {
+export const updateClient = async (req, res) => {
   // Get parameters
   const { cid } = req.params;
   const { name, email, timestamp, monthly } = req.body;
@@ -71,7 +71,7 @@ export const updateClient = async (req, res, next) => {
  * Delete Client
  * DELETE '/'
  */
-export const deleteClient = async (req, res, next) => {
+export const deleteClient = async (req, res) => {
   // Get parameters
   const { cid } = req.params;
   const deletedClient = await models.Client.findByIdAndRemove(cid);

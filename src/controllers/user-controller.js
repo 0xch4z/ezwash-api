@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import models from '../models';
 
@@ -6,7 +7,7 @@ import models from '../models';
  * Get Users
  * GET '/'
  */
-export const getUsers = async(req, res, next) => {
+export const getUsers = async(req, res) => {
   // get users
   const users = await models.User.find({});
   res.status(200).json(users);
@@ -16,7 +17,7 @@ export const getUsers = async(req, res, next) => {
  * Create User
  * POST '/'
  */
-export const createUser = async (req, res, next) => {
+export const createUser = async (req, res) => {
   // Get parameters
   const {
     userName,
@@ -44,7 +45,7 @@ export const createUser = async (req, res, next) => {
  * Get User
  * DELETE '/:uid'
  */
-export const getUser = async (req, res, next) => {
+export const getUser = async (req, res) => {
   // Get params
   const { uid } = req.params;
   // Get user
@@ -56,7 +57,7 @@ export const getUser = async (req, res, next) => {
  * Update User
  * PATCH '/:uid'
  */
-export const updateUser = async (req, res, next) => {
+export const updateUser = async (req, res) => {
   // Get params
   const { uid } = req.params;
   const {
@@ -88,7 +89,7 @@ export const updateUser = async (req, res, next) => {
  * Delete User
  * DELETE '/:uid'
  */
-export const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res) => {
   // Get params
   const { uid } = req.params;
   // Delete user
@@ -103,14 +104,16 @@ export const deleteUser = async (req, res, next) => {
  * Authenticate User
  * POST '/'
  */
-export const authenticateUser = async (req, res, next) => {
+export const authenticateUser = async (req, res) => {
   // Get params
   const { userName, passWord } = req.body;
   // Get user account
   const user = await models.User.findOne({ userName });
   // Compare hashes
   const success = await bcrypt.compare(passWord, user.hash);
+  // TODO: implement token serving
   res.status(200).json({
-    success
+    success,
+    token: null
   });
 };
