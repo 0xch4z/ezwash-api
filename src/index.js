@@ -4,36 +4,33 @@ import mongoose from 'mongoose';
 import logger from 'morgan';
 import { json as jsonParser } from 'body-parser';
 
-import clientRouter from './routers/client-router';
-import transactionRouter from './routers/transaction-router';
-import userRouter from './routers/user-router';
-import authenticationRouter from './routers/authentication-router';
-
+import * as routers from './routers';
 import errorHandler from './middleware/error-handler';
 
+// configure server
 const app = express();
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server started on ${port}`);
+  console.info(`Server started on ${port}`);
 });
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/ezwashdb';
+// confiure database
+const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/ezwash-db';
 mongoose.Promise = global.Promise
 mongoose.connect(mongoUrl, () => {
-  console.log(`Connected to mongodb @ ${mongoUrl}`);
+  console.info(`Connected to mongodb @ ${mongoUrl}`);
 });
 
-// Priority middleware
+// mount middleware
 app.use(compression());
 app.use(jsonParser());
 app.use(logger('dev'));
 
-// Routers
-app.use('/clients', clientRouter);
-app.use('/transactions', transactionRouter);
-app.use('/users', userRouter);
-app.use('/auth', authenticationRouter);
+// mount routers
+app.use('/clients', routers.ClientRouter);
+app.use('/transactions', routers.TransactionRouter);
+app.use('/users', routers.UserRouter);
 
-// Error Handlers
+// handle errors
 app.use(errorHandler.notFound);
 app.use(errorHandler.returnError);

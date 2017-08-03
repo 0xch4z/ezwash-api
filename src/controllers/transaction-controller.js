@@ -1,10 +1,10 @@
-import models from '../models';
+import * as models from '../models';
 
 /**
  * Get Transactions
  * GET '/'
  */
-export const getTransactions = async (req, res, next) => {
+export const getTransactions = async (req, res) => {
   // Get transactions
   const transactions = await models.Transaction.find({});
   res.status(200).json(transactions);
@@ -14,7 +14,7 @@ export const getTransactions = async (req, res, next) => {
  * Create Transaction
  * POST '/'
  */
-export const createTransaction = async (req, res, next) => {
+export const createTransaction = async (req, res) => {
   // Get parameters
   const {
     cid,
@@ -55,7 +55,7 @@ export const createTransaction = async (req, res, next) => {
  * Get Transaction
  * GET '/:tid'
  */
-export const getTransaction = async (req, res, next) => {
+export const getTransaction = async (req, res) => {
   // Get parameters
   const { tid } = req.params;
   // Get transaction
@@ -67,7 +67,7 @@ export const getTransaction = async (req, res, next) => {
  * Update Transaction
  * PATCH '/:tid'
  */
-export const updateTransaction = async (req, res, next) => {
+export const updateTransaction = async (req, res) => {
   // Get parameters
   const { tid } = req.params;
   const {
@@ -100,7 +100,7 @@ export const updateTransaction = async (req, res, next) => {
  * Delete Transaction
  * DELETE ':/tid'
  */
-export const deleteTransaction = async (req, res, next) => {
+export const deleteTransaction = async (req, res) => {
   // Get parameters
   const { tid } = req.params;
   // Delete transaction

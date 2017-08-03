@@ -80,5 +80,8 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "rules": {
+    "no-console": 0
   }
 }

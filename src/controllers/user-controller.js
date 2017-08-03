@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
-import models from '../models';
+import * as models from '../models';
 
 /**
  * Get Users
